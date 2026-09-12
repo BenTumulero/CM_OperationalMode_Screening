@@ -1,0 +1,30 @@
+# Initial conditions, batch to fedbatch switchpoint, and medium osmolality are used from optimized repeated batch simulation.
+
+# What is the optimal baseline osmolality to use?
+
+# What is the optimal feed medium composition to use during the fed-batch phase?
+fed_batch:
+  C_Glc_feed:
+    bounds: [1, 200]
+  C_Gln_feed:
+    bounds: [1, 200]
+  C_AA_feed:
+    bounds: [1, 200]
+
+# What is the optimal constant specific feed rate to use during the fed-batch phase?
+  F_L0_specific:
+    bounds: [0.001, 0.1]
+  osm_bg_feed:
+    bounds: [100, 300]
+
+chemostat:
+  D:
+    bounds: [0.0005, 0.1]
+  C_Glc_feed:
+    bounds: [1, 200]
+  C_Gln_feed:
+    bounds: [1, 200]
+  C_AA_feed:
+    bounds: [1, 200]
+  osm_bg_feed:
+    bounds: [100, 300]

@@ -1,0 +1,270 @@
+# ==============================================================================
+# Campaign 3: Operational Mode Comparison — GFI Cell with Dynamic Stoichiometry
+# ==============================================================================
+# Systematic comparison of all operating modes and operational strategies for
+# animal cell culture bioprocess simulation using AnimaKinetica.
+#
+# Optimization workflow (single-stage, differential evolution):
+#   All parameters optimized in a single run per simulation (up to ~10 parameters).
+#
+# Execution order:
+#   1. Optimizations/ notebooks (can run in parallel)
+#   2. Simulations/ notebooks (load optimized parameter sets)
+#   3. Sensitivity/ notebooks (load simulation pickles)
+#   4. Comparison/ notebook (load all simulation pickles)
+#
+# Pickle naming convention: campaign3_{simulation_id}
+# Optimized parameter set naming convention: campaign3_{simulation_id}_opt
+# ==============================================================================
+
+metadata:
+  name: "Campaign 3 - Operational Mode Comparison with GFI Cell and Dynamic Stoichiometry"
+  description: >
+    Systematic comparison of operating modes using GFI cell stoichiometry (dynamic) across all operating modes (Batch, Fed-Batch, Chemostat, Concentrated fed-batch, Continuous perfusion) and operational strategies (feed strategies, perfusion strategies) to evaluate their effect on key performance metrics including STY, medium efficiency, and nutrient use efficiency.
+  author: "Ben Tumulero"
+  affiliation: "Delft University of Technology, Bioprocess Engineering Section"
+  date_started: "2026-07-09"
+
+# ------------------------------------------------------------------------------
+# Shared simulation defaults merged into every simulation entry.
+# Mode-specific defaults are merged next, then per-simulation overrides win.
+# ------------------------------------------------------------------------------
+simulation_defaults:
+  kinetics: STOICHIOMETRIC
+  stoichiometry: DYNAMIC
+  solver_method: LSODA
+  optimize: true
+  parameter_sets:
+    - "base_parameters"
+    - "stoichiometry/anab_GFI"
+    - "stoichiometry/cata_GFI"
+    - "cell_properties/cell_GFI"
+    - "operating_modes/fed_batch"
+
+mode_defaults:
+  FEDBATCH:
+    feed_strategy: CONSTANT
+    perfusion_strategy: null
+    parameter_sets: null
+
+  BATCH_WITH_STARTUP_FEDBATCH:
+    feed_strategy: CONSTANT
+    perfusion_strategy: null
+    parameter_sets: null
+
+  CHEMOSTAT:
+    feed_strategy: CONSTANT
+    perfusion_strategy: null
+    parameter_sets:
+      - "operating_modes/chemostat"
+
+  CONCENTRATED_FEDBATCH:
+    feed_strategy: CONSTANT
+    parameter_sets:
+      - "operating_modes/perfusion"
+
+  CONTINUOUS_PERFUSION:
+    feed_strategy: CONSTANT
+    parameter_sets:
+      - "operating_modes/perfusion"
+
+# ------------------------------------------------------------------------------
+# Optimization settings (applied to all simulations where optimize: true)
+# ------------------------------------------------------------------------------
+optimization_settings:
+  # active_profile: "baseline_normalized"
+  active_profile: "desirability"
+  profiles:
+    baseline_normalized:
+      scoring_mode: "campaign_normalized"
+      filename: "{simulation_id}_p1"
+      # promoted_parameter_patch: "p1_optimized/{simulation_id}"      
+      batch_parameter_patch: "operating_modes/batch_p1_opt"
+      objectives:
+        - "STY_kg_m3_day"
+        - "medium_conversion_efficiency_m3_kg"
+        - "feed_conversion_efficiency_kg_kg"
+        - "protein_conversion_efficiency_kg_kg"
+      objective_weights:
+        STY_kg_m3_day: 5.0
+        medium_conversion_efficiency_m3_kg: 1.0
+        feed_conversion_efficiency_kg_kg: 1.0
+        protein_conversion_efficiency_kg_kg: 1.0
+    desirability:
+      scoring_mode: "engineering_desirability"
+      filename: "{simulation_id}_p2"
+      # initial_parameter_patch: "p1_optimized/{simulation_id}"
+      batch_parameter_patch: "operating_modes/batch_p2_opt"
+      objectives:
+        - "STY_kg_m3_day"
+        - "medium_conversion_efficiency_m3_kg"
+        - "feed_conversion_efficiency_kg_kg"
+        - "protein_conversion_efficiency_kg_kg"
+      objective_weights:
+        STY_kg_m3_day: 1.0
+        medium_conversion_efficiency_m3_kg: 1.0
+        feed_conversion_efficiency_kg_kg: 1.0
+        protein_conversion_efficiency_kg_kg: 1.0
+      desirability:
+        STY_kg_m3_day:
+          minimum: 0.0
+          target: 2.0
+          safety_cap: 1.3
+        # Minimize metrics: target is desirable; minimum is the provisional
+        # upper unacceptable bound. Recalibrate from current baselines.
+        medium_conversion_efficiency_m3_kg:
+          minimum: 3.0
+          target: 0.3
+          safety_cap: 1.1
+        feed_conversion_efficiency_kg_kg:
+          minimum: 40.0
+          target: 4.0
+          safety_cap: 1.2
+        protein_conversion_efficiency_kg_kg:
+          minimum: 30.0
+          target: 2.5
+          safety_cap: 1.2
+  workers: 10  # Running multiple optimizations in parallel, so set to 1 to avoid nested parallelism. 1 worker also allows for better differential evolution performance with small parameter sets.
+  seed: 42 # For reproducibility of optimization results.
+  timeout: 10  # Maximum allowed time (seconds) per objective function evaluation. Dynamic stoichiometry is slower than constant.
+  filename: "{simulation_id}_opt" # Legacy fallback; profile filenames take precedence.
+  #opt_config: ... # Set for each simulation separately
+
+
+# ==============================================================================
+# SIMULATIONS
+# ==============================================================================
+simulations:
+  # ----------------------------------------------------------------------------
+  # 1. FED-BATCH
+  # Five feed strategies compared.
+  # All subsequent operating modes rely on a preceding fed-batch phase. Advised to first optimize these
+  # modes, then use the optimized feed parameters in the subsequent operating modes for a fair comparison.
+  # BATCH (at V_init) - FEDBATCH (until V_max reached) - BATCH - FEDBATCH - BATCH - FEDBATCH etc. (until max_culture_age)
+  # ----------------------------------------------------------------------------
+  - id: fedbatch_constant
+    label: "Fed-Batch | GFI | Constant Feed"
+    mode: FEDBATCH
+    feed_strategy: CONSTANT
+    opt_config: "F_C"
+
+  - id: fedbatch_linear
+    label: "Fed-Batch | GFI | Linear Feed"
+    mode: FEDBATCH
+    feed_strategy: LINEAR
+    opt_config: "F_L"
+
+  - id: fedbatch_exponential
+    label: "Fed-Batch | GFI | Exponential Feed"
+    mode: FEDBATCH
+    feed_strategy: EXPONENTIAL
+    opt_config: "F_E"
+
+  - id: fedbatch_csfr
+    label: "Fed-Batch | GFI | Cell-Specific Feed Rate"
+    mode: FEDBATCH
+    feed_strategy: CSFR
+    opt_config: "F_CSFR"
+
+  - id: fedbatch_gsp
+    label: "Fed-Batch | GFI | Glucose Setpoint Feed"
+    mode: FEDBATCH
+    feed_strategy: GLUCOSE_SETPOINT
+    opt_config: "F_GSP"
+    # solver_method: "BDF" # gsp is particularly stiff
+
+  # ----------------------------------------------------------------------------
+  # 2. BATCH with a startup fed-batch
+  # The initial fedbatch reactor filling ensures that all simulations start from the same 
+  # initial condtions, and to allow for a fair comparison of the different operating modes.
+  # BATCH (at V_init) - FEDBATCH (until V_max reached) - BATCH - BATCH - BATCH etc. (until max_culture_age).
+  # ----------------------------------------------------------------------------
+  - id: batch
+    label: "Batch | GFI"
+    mode: BATCH_WITH_STARTUP_FEDBATCH
+    opt_config: "BSF"
+
+  # ----------------------------------------------------------------------------
+  # 3. CHEMOSTAT
+  # Continuous culture at fixed dilution rate.
+  # Steady-state operation enables continuous biomass production.
+  # BATCH - FEDBATCH - CHEMOSTAT (until max_culture_age)
+  # ----------------------------------------------------------------------------
+  - id: chemostat
+    label: "Chemostat | GFI | Constant Feed"
+    mode: CHEMOSTAT
+    opt_config: "C"
+
+  # ----------------------------------------------------------------------------
+  # 4. CONCENTRATED FED-BATCH
+  # Fedbatch with cell retention, no bleed, after initial normal fedbatch phase.
+  # Five perfusion strategies compared.
+  # BATCH - FEDBATCH - PERFUSION (no bleed) (until max_culture_age)
+  # ----------------------------------------------------------------------------
+  - id: cf_constant
+    label: "Concentrated Fed-Batch | GFI | Constant Perfusion"
+    mode: CONCENTRATED_FEDBATCH
+    perfusion_strategy: CONSTANT
+    opt_config: "CF_C"
+
+  - id: cf_tbs
+    label: "Concentrated Fed-Batch | GFI | Toxicity-Based Step Perfusion"
+    mode: CONCENTRATED_FEDBATCH
+    perfusion_strategy: TOXICITY_BASED_STEP
+    opt_config: "CF_TBS"
+
+  - id: cf_tbp
+    label: "Concentrated Fed-Batch | GFI | Toxicity-Based Proportional Perfusion"
+    mode: CONCENTRATED_FEDBATCH
+    perfusion_strategy: TOXICITY_BASED_PROPORTIONAL
+    opt_config: "CF_TBP"
+
+  - id: cf_cspr
+    label: "Concentrated Fed-Batch | GFI | Cell-Specific Perfusion Rate"
+    mode: CONCENTRATED_FEDBATCH
+    perfusion_strategy: CSPR
+    opt_config: "CF_CSPR"
+
+  - id: cf_gsp
+    label: "Concentrated Fed-Batch | GFI | Glucose Setpoint Perfusion"
+    mode: CONCENTRATED_FEDBATCH
+    perfusion_strategy: GLUCOSE_SETPOINT
+    opt_config: "CF_GSP"
+    # solver_method: "BDF"
+
+  # ----------------------------------------------------------------------------
+  # 5. CONTINUOUS PERFUSION
+  # Chemostat with cell retention, with bleed, after initial fedbatch phase.
+  # Five perfusion strategies compared.
+  # BATCH - FEDBATCH - PERFUSION (with bleed) (until max_culture_age)
+  # ----------------------------------------------------------------------------
+  - id: cp_constant
+    label: "Continuous Perfusion | GFI | Constant Dilution Rate"
+    mode: CONTINUOUS_PERFUSION
+    perfusion_strategy: CONSTANT
+    opt_config: "CP_C"
+
+  - id: cp_tbs
+    label: "Continuous Perfusion | GFI | Toxicity-Based Step Perfusion"
+    mode: CONTINUOUS_PERFUSION
+    perfusion_strategy: TOXICITY_BASED_STEP
+    opt_config: "CP_TBS"
+
+  - id: cp_tbp
+    label: "Continuous Perfusion | GFI | Toxicity-Based Proportional Perfusion"
+    mode: CONTINUOUS_PERFUSION
+    perfusion_strategy: TOXICITY_BASED_PROPORTIONAL
+    opt_config: "CP_TBP"
+
+  - id: cp_cspr
+    label: "Continuous Perfusion | GFI | CSPR"
+    mode: CONTINUOUS_PERFUSION
+    perfusion_strategy: CSPR
+    opt_config: "CP_CSPR"
+
+  - id: cp_gsp
+    label: "Continuous Perfusion | GFI | Glucose Setpoint Perfusion"
+    mode: CONTINUOUS_PERFUSION
+    perfusion_strategy: GLUCOSE_SETPOINT
+    opt_config: "CP_GSP"
+    # solver_method: "BDF"

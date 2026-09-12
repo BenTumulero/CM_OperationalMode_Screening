@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 820" width="100%" height="100%" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+    
+    <!-- Arrow Marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#d97706" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Title Header Banner -->
+  <rect x="30" y="25" width="890" height="60" rx="10" fill="#0f172a" />
+  <text x="475" y="52" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" letter-spacing="0.5">Campaign Execution &amp; Analysis Workflow</text>
+  <text x="475" y="72" text-anchor="middle" fill="#94a3b8" font-size="12">Bioprocess Operational Mode Screening — Lifecycle Overview</text>
+
+  <!-- Step 1: Configure Campaign -->
+  <g transform="translate(190, 115)" filter="url(#shadow)">
+    <rect x="0" y="0" width="570" height="95" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <rect x="0" y="0" width="570" height="28" rx="8" fill="#eff6ff" />
+    <path d="M 0 20 L 0 28 L 570 28 L 570 20 Z" fill="#eff6ff" />
+    <circle cx="20" cy="14" r="10" fill="#2563eb" />
+    <text x="20" y="18" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">1</text>
+    <text x="40" y="19" fill="#1e3a8a" font-size="13" font-weight="700">Configure Campaign &amp; Optimization Profile</text>
+    
+    <text x="20" y="48" fill="#334155" font-size="11.5" font-weight="600">• campaign_config.yaml: <tspan font-weight="400" fill="#475569">Set simulation/mode defaults, map parameter sets to runner files</tspan></text>
+    <text x="20" y="66" fill="#334155" font-size="11.5" font-weight="600">• active_profile: <tspan font-weight="400" fill="#475569">Choose optimization profile (</tspan><tspan fill="#0284c7" font-weight="600">baseline_normalized</tspan><tspan fill="#475569"> or </tspan><tspan fill="#0284c7" font-weight="600">desirability</tspan><tspan fill="#475569">)</tspan></text>
+    <text x="20" y="84" fill="#334155" font-size="11.5" font-weight="600">• parameters/ &amp; optimization_config/: <tspan font-weight="400" fill="#475569">Adjust parameter sets and parameter bounds</tspan></text>
+  </g>
+
+  <!-- Flow Connector 1 to Decision -->
+  <line x1="475" y1="210" x2="475" y2="245" stroke="#475569" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Step 2: Decision - Baseline Normalization Required? -->
+  <g transform="translate(475, 290)">
+    <polygon points="0,-35 150,0 0,35 -150,0" fill="#fffbeb" stroke="#d97706" stroke-width="2" filter="url(#shadow)" />
+    <text x="0" y="-6" text-anchor="middle" fill="#92400e" font-size="12" font-weight="700">Baseline Normalization</text>
+    <text x="0" y="10" text-anchor="middle" fill="#92400e" font-size="12" font-weight="700">Required?</text>
+    <text x="0" y="24" text-anchor="middle" fill="#b45309" font-size="9.5">(baseline_normalized profile)</text>
+  </g>
+
+  <!-- Step 2 Yes Branch: create_normalization_values.ipynb -->
+  <line x1="625" y1="290" x2="710" y2="290" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-amber)" />
+  <text x="660" y="280" text-anchor="middle" fill="#d97706" font-size="11" font-weight="700">Yes</text>
+
+  <g transform="translate(710, 250)" filter="url(#shadow)">
+    <rect x="0" y="0" width="205" height="80" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="1.5" />
+    <rect x="0" y="0" width="205" height="24" rx="8" fill="#fef3c7" />
+    <path d="M 0 16 L 0 24 L 205 24 L 205 16 Z" fill="#fef3c7" />
+    <circle cx="16" cy="12" r="8" fill="#d97706" />
+    <text x="16" y="15" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">2</text>
+    <text x="32" y="16" fill="#92400e" font-size="11" font-weight="700">Generate Baselines</text>
+    <text x="12" y="44" fill="#1e293b" font-size="10.5" font-weight="600">create_normalization_values.ipynb</text>
+    <text x="12" y="64" fill="#64748b" font-size="10">Outputs <tspan font-family="monospace" fill="#0f172a">campaign_normalization.yaml</tspan></text>
+  </g>
+
+  <!-- Re-converge from Step 2 to Step 3 -->
+  <path d="M 812 330 L 812 395 L 475 395" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4" />
+  
+  <!-- Step 2 No Branch directly to Step 3 -->
+  <line x1="475" y1="325" x2="475" y2="415" stroke="#475569" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="485" y="360" fill="#475569" font-size="11" font-weight="700">No</text>
+
+  <!-- Step 3: Run Script Runner -->
+  <g transform="translate(230, 415)" filter="url(#shadow)">
+    <rect x="0" y="0" width="490" height="80" rx="8" fill="#ffffff" stroke="#0284c7" stroke-width="2" />
+    <rect x="0" y="0" width="490" height="26" rx="8" fill="#f0f9ff" />
+    <path d="M 0 18 L 0 26 L 490 26 L 490 18 Z" fill="#f0f9ff" />
+    <circle cx="20" cy="13" r="9" fill="#0284c7" />
+    <text x="20" y="17" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold">3</text>
+    <text x="38" y="18" fill="#0369a1" font-size="12.5" font-weight="700">Execute Batch Script Runner</text>
+    
+    <text x="20" y="46" fill="#1e293b" font-size="11" font-family="monospace" font-weight="600">python run_scripts.py</text>
+    <text x="20" y="65" fill="#475569" font-size="11">Runs mode scripts in parallel (01_FedBatch ... 05_ContinuousPerfusion)</text>
+  </g>
+
+  <!-- Flow Connector 3 to Error Check -->
+  <line x1="475" y1="495" x2="475" y2="530" stroke="#475569" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Decision: Troubles / Failures in logs/? -->
+  <g transform="translate(475, 570)">
+    <polygon points="0,-30 140,0 0,30 -140,0" fill="#fef2f2" stroke="#dc2626" stroke-width="2" filter="url(#shadow)" />
+    <text x="0" y="-4" text-anchor="middle" fill="#991b1b" font-size="12" font-weight="700">Errors / Stalls</text>
+    <text x="0" y="12" text-anchor="middle" fill="#991b1b" font-size="12" font-weight="700">in logs/?</text>
+  </g>
+
+  <!-- Step 4: Troubleshooting Branch (Yes) -->
+  <line x1="335" y1="570" x2="235" y2="570" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red)" />
+  <text x="285" y="560" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="700">Yes</text>
+
+  <g transform="translate(25, 525)" filter="url(#shadow)">
+    <rect x="0" y="0" width="210" height="90" rx="8" fill="#ffffff" stroke="#dc2626" stroke-width="1.5" />
+    <rect x="0" y="0" width="210" height="24" rx="8" fill="#fee2e2" />
+    <path d="M 0 16 L 0 24 L 210 24 L 210 16 Z" fill="#fee2e2" />
+    <circle cx="16" cy="12" r="8" fill="#dc2626" />
+    <text x="16" y="15" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">4</text>
+    <text x="32" y="16" fill="#991b1b" font-size="11" font-weight="700">Troubleshooting</text>
+    <text x="12" y="44" fill="#1e293b" font-size="10.5" font-weight="600">troubleshooter.ipynb</text>
+    <text x="12" y="62" fill="#64748b" font-size="9.5">Inspect stalled integrations,</text>
+    <text x="12" y="76" fill="#64748b" font-size="9.5">events, or solver failures</text>
+  </g>
+
+  <!-- Loop back from troubleshooter to configure/run -->
+  <path d="M 130 525 L 130 455 L 230 455" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-red)" />
+
+  <!-- Step 5: Success (No errors) to Sanity Check -->
+  <line x1="475" y1="600" x2="475" y2="640" stroke="#059669" stroke-width="2" marker-end="url(#arrow-emerald)" />
+  <text x="490" y="625" fill="#059669" font-size="11" font-weight="700">No (Success)</text>
+
+  <g transform="translate(230, 640)" filter="url(#shadow)">
+    <rect x="0" y="0" width="490" height="75" rx="8" fill="#ffffff" stroke="#059669" stroke-width="2" />
+    <rect x="0" y="0" width="490" height="26" rx="8" fill="#ecfdf5" />
+    <path d="M 0 18 L 0 26 L 490 26 L 490 18 Z" fill="#ecfdf5" />
+    <circle cx="20" cy="13" r="9" fill="#059669" />
+    <text x="20" y="17" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold">5</text>
+    <text x="38" y="18" fill="#065f46" font-size="12.5" font-weight="700">Verify &amp; Validate Results</text>
+    
+    <text x="20" y="46" fill="#1e293b" font-size="11" font-weight="600">sanity_check.ipynb</text>
+    <text x="20" y="64" fill="#475569" font-size="11">Inspect kinetic/metabolite plots, mass balance integrity &amp; summary stats</text>
+  </g>
+
+  <!-- Flow Connector 5 to Step 6 -->
+  <line x1="475" y1="715" x2="475" y2="745" stroke="#475569" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Step 6: Downstream Data Analysis -->
+  <g transform="translate(270, 745)" filter="url(#shadow)">
+    <rect x="0" y="0" width="410" height="55" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5" />
+    <rect x="0" y="0" width="410" height="22" rx="8" fill="#f8fafc" />
+    <path d="M 0 14 L 0 22 L 410 22 L 410 14 Z" fill="#f8fafc" />
+    <circle cx="18" cy="11" r="8" fill="#64748b" />
+    <text x="18" y="14" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">6</text>
+    <text x="34" y="15" fill="#334155" font-size="11.5" font-weight="700">Downstream Data Analysis</text>
+    <text x="18" y="42" fill="#475569" font-size="10.5">Flexible analysis in 06_Analysis/ and Cross_Campaign_Comparison/</text>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+_metadata:
+  description: Campaign-level normalization scalars for multi-objective optimization.
+    Conversion-ratio values are reciprocal migrations of the former yield-style
+    scalars and must be regenerated from current baseline simulations.
+  generated: '2026-08-06 15:05:19'
+  n_simulations_used: 17
+  simulation_ids:
+  - fedbatch_constant
+  - fedbatch_linear
+  - fedbatch_exponential
+  - fedbatch_csfr
+  - fedbatch_gsp
+  - batch
+  - chemostat
+  - cf_constant
+  - cf_tbs
+  - cf_tbp
+  - cf_cspr
+  - cf_gsp
+  - cp_constant
+  - cp_tbs
+  - cp_tbp
+  - cp_cspr
+  - cp_gsp
+STY_kg_m3_day: 0.3306695313318504
+medium_conversion_efficiency_m3_kg: 3.683470411219308
+feed_conversion_efficiency_kg_kg: 21.00251131658631
+protein_conversion_efficiency_kg_kg: 12.008953585329

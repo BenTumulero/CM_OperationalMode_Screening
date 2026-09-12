@@ -1,0 +1,31 @@
+# What is the optimal batch medium composition to start with?
+initial_conditions:
+  C_Glc_init:
+    bounds: [1, 100]
+  C_Gln_init:
+    bounds: [1, 100]
+  C_AA_init:
+    bounds: [1, 100]
+  osm_bg_init:
+    bounds: [100, 300]
+
+# What is the optimal feed medium composition to use during the fed-batch phase?
+fed_batch:
+  C_Glc_feed:
+    bounds: [1, 200]
+  C_Gln_feed:
+    bounds: [1, 200]
+  C_AA_feed:
+    bounds: [1, 200]
+
+# What is the optimal exponential feed curve to use?
+  F_L0_specific:
+    bounds: [0.001, 0.1]
+  r:
+    bounds: [0.0, 0.05]
+
+# When should the initial batch end and the fec-batch be triggered?
+  C_Glc_batch_trigger:
+    bounds: [0.01, 10]
+  osm_bg_feed:
+    bounds: [100, 300]

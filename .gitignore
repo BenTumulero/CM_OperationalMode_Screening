@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Simulation binary data & exports
+*.pkl
+*.pickle
+export/
+**/export/
+logs/
+**/logs/
+
+# Excel / CSV exports (unless reference data)
+*.xlsx
+*.xls
+*.csv
+
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

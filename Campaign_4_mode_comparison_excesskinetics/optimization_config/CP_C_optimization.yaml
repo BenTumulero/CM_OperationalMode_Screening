@@ -1,0 +1,28 @@
+perfusion:
+  C_Glc_feed:
+    bounds: [1, 200]
+  C_Gln_feed:
+    bounds: [1, 200]
+  C_AA_feed:
+    bounds: [1, 200]
+  D_baseline:
+    bounds: [0.00001, 2]
+  B:
+    bounds: [0.00001, 0.05]
+  osm_bg_feed:
+    bounds: [100, 300]
+
+# What is the optimal feed medium composition to use during the fed-batch phase?
+fed_batch:
+  C_Glc_feed:
+    bounds: [1, 200]
+  C_Gln_feed:
+    bounds: [1, 200]
+  C_AA_feed:
+    bounds: [1, 200]
+
+# What is the optimal constant specific feed rate to use during the fed-batch phase?
+  F_L0_specific:
+    bounds: [0.001, 0.1]
+  osm_bg_feed:
+    bounds: [100, 300]

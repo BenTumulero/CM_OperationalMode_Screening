@@ -1,0 +1,34 @@
+perfusion:
+  C_Glc_feed:
+    bounds: [1, 200]
+  C_Gln_feed:
+    bounds: [1, 200]
+  C_AA_feed:
+    bounds: [1, 200]
+  Xv_harvest_stop:
+    bounds: [5.0e+9, 400.0e+9]
+  D_baseline:
+    bounds: [0.0001, 2]
+  # Additional for Toxicity based step strategy
+  D_1_multiplier:
+    bounds: [1.5, 10]
+    # Multiplier for first dilution rate step
+  D_2_multiplier:
+    bounds: [5, 20]
+  osm_bg_feed:
+    bounds: [100, 300]
+
+# What is the optimal feed medium composition to use during the fed-batch phase?
+fed_batch:
+  C_Glc_feed:
+    bounds: [1, 200]
+  C_Gln_feed:
+    bounds: [1, 200]
+  C_AA_feed:
+    bounds: [1, 200]
+
+# What is the optimal constant specific feed rate to use during the fed-batch phase?
+  F_L0_specific:
+    bounds: [0.001, 0.1]
+  osm_bg_feed:
+    bounds: [100, 300]
