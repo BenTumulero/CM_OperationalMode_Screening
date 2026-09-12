@@ -7,8 +7,8 @@ __pycache__/
 venv/
 
 # Simulation binary data & exports
-*.pkl
-*.pickle
+# *.pkl
+# *.pickle
 # export/
 # **/export/
 logs/
