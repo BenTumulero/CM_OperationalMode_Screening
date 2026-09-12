@@ -1,0 +1,31 @@
+campaign,mode_group,kpi,min_value,max_value,mean_value,n_runs,kpi_label
+Campaign_3,FedBatch,STY_kg_m3_day,0.14371950499500755,0.2640961509344111,0.20912170831238006,5,STY (kg/m3/day)
+Campaign_3,Batch,STY_kg_m3_day,0.3552845521217361,0.3552845521217361,0.3552845521217361,1,STY (kg/m3/day)
+Campaign_3,Chemostat,STY_kg_m3_day,0.6332694325362457,0.6332694325362457,0.6332694325362457,1,STY (kg/m3/day)
+Campaign_3,Concentrated FedBatch,STY_kg_m3_day,1.1932514340720546,1.5577587598774982,1.4526085002782883,5,STY (kg/m3/day)
+Campaign_3,Continuous Perfusion,STY_kg_m3_day,3.851563978135938,4.118612244615401,3.9803288156202656,5,STY (kg/m3/day)
+Campaign_3,FedBatch,feed_conversion_efficiency_kg_kg,11.008210084452173,21.500896605149862,17.671906515197627,5,Feed Conversion (kg feed/kg DCM)
+Campaign_3,Batch,feed_conversion_efficiency_kg_kg,5.480353283125416,5.480353283125416,5.480353283125416,1,Feed Conversion (kg feed/kg DCM)
+Campaign_3,Chemostat,feed_conversion_efficiency_kg_kg,8.147337675118406,8.147337675118406,8.147337675118406,1,Feed Conversion (kg feed/kg DCM)
+Campaign_3,Concentrated FedBatch,feed_conversion_efficiency_kg_kg,14.348619837754686,16.05344000953617,15.243132994780655,5,Feed Conversion (kg feed/kg DCM)
+Campaign_3,Continuous Perfusion,feed_conversion_efficiency_kg_kg,8.676781148827041,11.220578760790906,10.274692481268552,5,Feed Conversion (kg feed/kg DCM)
+Campaign_3,FedBatch,medium_conversion_efficiency_m3_kg,0.5629649491865795,0.8573392805800976,0.726456159131987,5,Medium Conversion (m3/kg DCM)
+Campaign_3,Batch,medium_conversion_efficiency_m3_kg,0.5209725884513801,0.5209725884513801,0.5209725884513801,1,Medium Conversion (m3/kg DCM)
+Campaign_3,Chemostat,medium_conversion_efficiency_m3_kg,0.7918385426005541,0.7918385426005541,0.7918385426005541,1,Medium Conversion (m3/kg DCM)
+Campaign_3,Concentrated FedBatch,medium_conversion_efficiency_m3_kg,1.0519921038668145,1.5091560831043114,1.294325878524272,5,Medium Conversion (m3/kg DCM)
+Campaign_3,Continuous Perfusion,medium_conversion_efficiency_m3_kg,0.9842286359768081,1.0697268446450152,1.0272418892640136,5,Medium Conversion (m3/kg DCM)
+Campaign_3,FedBatch,number_of_batches,40.08251332206342,56.156547271405266,48.19726725257382,5,Number of Batches
+Campaign_3,Batch,number_of_batches,61.38950351426905,61.38950351426905,61.38950351426905,1,Number of Batches
+Campaign_3,Chemostat,number_of_batches,8.0,8.0,8.0,1,Number of Batches
+Campaign_3,Concentrated FedBatch,number_of_batches,31.075199518255722,31.772586242233597,31.41865463154695,5,Number of Batches
+Campaign_3,Continuous Perfusion,number_of_batches,8.0,8.0,8.0,5,Number of Batches
+Campaign_3,FedBatch,protein_conversion_efficiency_kg_kg,3.954738010267235,18.97710732444237,9.68331308493217,5,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_3,Batch,protein_conversion_efficiency_kg_kg,3.025719337765622,3.025719337765622,3.025719337765622,1,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_3,Chemostat,protein_conversion_efficiency_kg_kg,4.776751736409331,4.776751736409331,4.776751736409331,1,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_3,Concentrated FedBatch,protein_conversion_efficiency_kg_kg,6.093950253187413,8.513701074382425,7.341809811726921,5,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_3,Continuous Perfusion,protein_conversion_efficiency_kg_kg,3.7701062993720034,4.896725525134989,4.382715003219512,5,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_3,FedBatch,total_DCM_harvested_kg,91.98048319680484,169.0215365980231,133.83789331992324,5,Harvested Dry Cell Mass (kg)
+Campaign_3,Batch,total_DCM_harvested_kg,227.3821133579111,227.3821133579111,227.3821133579111,1,Harvested Dry Cell Mass (kg)
+Campaign_3,Chemostat,total_DCM_harvested_kg,405.29243682319725,405.29243682319725,405.29243682319725,1,Harvested Dry Cell Mass (kg)
+Campaign_3,Concentrated FedBatch,total_DCM_harvested_kg,763.680917806115,996.9656063215989,929.6694401781045,5,Harvested Dry Cell Mass (kg)
+Campaign_3,Continuous Perfusion,total_DCM_harvested_kg,2465.0009460070005,2635.911836553857,2547.41044199697,5,Harvested Dry Cell Mass (kg)

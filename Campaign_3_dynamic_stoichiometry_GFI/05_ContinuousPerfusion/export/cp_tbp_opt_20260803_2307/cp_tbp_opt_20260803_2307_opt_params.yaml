@@ -1,0 +1,61 @@
+metadata:
+  generated: '2026-08-03 23:07:24'
+  objectives:
+  - STY_kg_m3_day
+  - medium_use_efficiency_kg_m3
+  - nutrient_use_efficiency_kg_kg
+  objective_value: 59.06018025454012
+perfusion:
+  C_Glc_feed:
+    name: Perfusion Feed Glucose Concentration
+    value: 120.89624284551435
+    unit: mmol/L
+  C_Gln_feed:
+    name: Perfusion Feed Glutamine Concentration
+    value: 69.29348589213352
+    unit: mmol/L
+  C_AA_feed:
+    name: Perfusion Feed Amino Acids Concentration
+    value: 8.479475120711468
+    unit: mmol/L
+  D_baseline:
+    name: Base Dilution Rate
+    value: 0.2425827539289097
+    unit: 1/h
+  k_Lac:
+    name: Lactate Proportionality Constant
+    value: 6.416878713852146
+    unit: 1/h
+  k_Amm:
+    name: Ammonia Proportionality Constant
+    value: 6.843304300987301
+    unit: 1/h
+  B:
+    name: Bleed Rate
+    value: 0.01684001352401943
+    unit: 1/h
+  osm_bg_feed:
+    name: Perfusion Feed Baseline Osmolality
+    value: 101.50709411673687
+    unit: mOsm/kg
+fed_batch:
+  C_Glc_feed:
+    name: FB Feed Glucose Concentration
+    value: 112.66439662396364
+    unit: mmol/L
+  C_Gln_feed:
+    name: FB Feed Glutamine Concentration
+    value: 61.977223608816495
+    unit: mmol/L
+  C_AA_feed:
+    name: FB Feed Amino Acids Concentration
+    value: 36.20599803179311
+    unit: mmol/L
+  F_L0_specific:
+    name: FB Base Specific Feed Flow Rate
+    value: 0.05051116767495586
+    unit: L/h/L
+  osm_bg_feed:
+    name: FB Feed Baseline Osmolality
+    value: 108.88961864014878
+    unit: mOsm/kg

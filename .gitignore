@@ -9,15 +9,15 @@ venv/
 # Simulation binary data & exports
 *.pkl
 *.pickle
-export/
-**/export/
+# export/
+# **/export/
 logs/
 **/logs/
 
 # Excel / CSV exports (unless reference data)
-*.xlsx
-*.xls
-*.csv
+# *.xlsx
+# *.xls
+# *.csv
 
 
 # OS / editor

@@ -1,0 +1,109 @@
+metadata:
+  generated: '2026-08-19 01:05:17'
+  objective_value: 4.177300714520824
+  objective_contributions:
+    STY_kg_m3_day:
+      raw_value: 5.130799227146076
+      direction: maximize
+      score_value: 1.269783776147289
+      weight: 1.0
+      weighted_contribution: 1.269783776147289
+    medium_conversion_efficiency_m3_kg:
+      raw_value: 0.7980166265774613
+      direction: minimize
+      score_value: 0.944372798448524
+      weight: 1.0
+      weighted_contribution: 0.944372798448524
+    feed_conversion_efficiency_kg_kg:
+      raw_value: 7.333256628280271
+      direction: minimize
+      score_value: 0.9639090284518881
+      weight: 1.0
+      weighted_contribution: 0.9639090284518881
+    protein_conversion_efficiency_kg_kg:
+      raw_value: 3.057520553968447
+      direction: minimize
+      score_value: 0.9992351114731224
+      weight: 1.0
+      weighted_contribution: 0.9992351114731224
+  optimization_scoring:
+    profile: desirability
+    mode: engineering_desirability
+    objectives:
+    - STY_kg_m3_day
+    - medium_conversion_efficiency_m3_kg
+    - feed_conversion_efficiency_kg_kg
+    - protein_conversion_efficiency_kg_kg
+    objective_directions:
+      STY_kg_m3_day: maximize
+      medium_conversion_efficiency_m3_kg: minimize
+      feed_conversion_efficiency_kg_kg: minimize
+      protein_conversion_efficiency_kg_kg: minimize
+    weights:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    desirability:
+      STY_kg_m3_day:
+        minimum: 0.0
+        target: 2.0
+        safety_cap: 1.3
+      medium_conversion_efficiency_m3_kg:
+        minimum: 3.0
+        target: 0.3
+        safety_cap: 1.1
+      feed_conversion_efficiency_kg_kg:
+        minimum: 40.0
+        target: 4.0
+        safety_cap: 1.2
+      protein_conversion_efficiency_kg_kg:
+        minimum: 30.0
+        target: 3.0
+        safety_cap: 1.2
+perfusion:
+  C_Glc_feed:
+    name: Perfusion Feed Glucose Concentration
+    value: 35.80826953025259
+    unit: mmol/L
+  C_Gln_feed:
+    name: Perfusion Feed Glutamine Concentration
+    value: 6.8279618230762935
+    unit: mmol/L
+  C_AA_feed:
+    name: Perfusion Feed Amino Acids Concentration
+    value: 13.220270515473374
+    unit: mmol/L
+  D_baseline:
+    name: Base Dilution Rate
+    value: 0.4133390004337909
+    unit: 1/h
+  B:
+    name: Bleed Rate
+    value: 0.004461189210136825
+    unit: 1/h
+  osm_bg_feed:
+    name: Perfusion Feed Baseline Osmolality
+    value: 188.6003642930229
+    unit: mOsm/kg
+fed_batch:
+  C_Glc_feed:
+    name: FB Feed Glucose Concentration
+    value: 105.65595306903367
+    unit: mmol/L
+  C_Gln_feed:
+    name: FB Feed Glutamine Concentration
+    value: 16.853458179787893
+    unit: mmol/L
+  C_AA_feed:
+    name: FB Feed Amino Acids Concentration
+    value: 103.56162869318912
+    unit: mmol/L
+  F_L0_specific:
+    name: FB Base Specific Feed Flow Rate
+    value: 0.052789771098785396
+    unit: L/h/L
+  osm_bg_feed:
+    name: FB Feed Baseline Osmolality
+    value: 222.95531151589162
+    unit: mOsm/kg

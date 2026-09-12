@@ -1,0 +1,105 @@
+metadata:
+  generated: '2026-08-25 02:15:03'
+  objective_value: 3.6917247274879834
+  objective_contributions:
+    STY_kg_m3_day:
+      raw_value: 1.099486443987138
+      direction: maximize
+      score_value: 0.7194298263210256
+      weight: 1.0
+      weighted_contribution: 0.7194298263210256
+    medium_conversion_efficiency_m3_kg:
+      raw_value: 0.16698877930794673
+      direction: minimize
+      score_value: 1.0111418146484583
+      weight: 1.0
+      weighted_contribution: 1.0111418146484583
+    feed_conversion_efficiency_kg_kg:
+      raw_value: 6.507166923320631
+      direction: minimize
+      score_value: 0.9734191549337474
+      weight: 1.0
+      weighted_contribution: 0.9734191549337474
+    protein_conversion_efficiency_kg_kg:
+      raw_value: 3.4135639873891206
+      direction: minimize
+      score_value: 0.987733931584752
+      weight: 1.0
+      weighted_contribution: 0.987733931584752
+  optimization_scoring:
+    profile: desirability
+    mode: engineering_desirability
+    objectives:
+    - STY_kg_m3_day
+    - medium_conversion_efficiency_m3_kg
+    - feed_conversion_efficiency_kg_kg
+    - protein_conversion_efficiency_kg_kg
+    objective_directions:
+      STY_kg_m3_day: maximize
+      medium_conversion_efficiency_m3_kg: minimize
+      feed_conversion_efficiency_kg_kg: minimize
+      protein_conversion_efficiency_kg_kg: minimize
+    weights:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    desirability:
+      STY_kg_m3_day:
+        minimum: 0.0
+        target: 2.0
+        safety_cap: 1.3
+      medium_conversion_efficiency_m3_kg:
+        minimum: 3.0
+        target: 0.3
+        safety_cap: 1.1
+      feed_conversion_efficiency_kg_kg:
+        minimum: 40.0
+        target: 4.0
+        safety_cap: 1.2
+      protein_conversion_efficiency_kg_kg:
+        minimum: 30.0
+        target: 2.5
+        safety_cap: 1.2
+initial_conditions:
+  C_Glc_init:
+    name: Initial Glucose Concentration
+    value: 23.726965817929617
+    unit: mmol/L
+  C_Gln_init:
+    name: Initial Glutamine Concentration
+    value: 70.01737623211065
+    unit: mmol/L
+  C_AA_init:
+    name: Initial Amino Acid Concentration
+    value: 41.947667916212104
+    unit: mmol/L
+  osm_bg_init:
+    name: Baseline Osmolality of Culture Medium
+    value: 229.7414977345125
+    unit: mOsm/kg
+fed_batch:
+  C_Glc_feed:
+    name: FB Feed Glucose Concentration
+    value: 172.44335455656108
+    unit: mmol/L
+  C_Gln_feed:
+    name: FB Feed Glutamine Concentration
+    value: 55.02813992930368
+    unit: mmol/L
+  C_AA_feed:
+    name: FB Feed Amino Acids Concentration
+    value: 48.082471633626824
+    unit: mmol/L
+  CSFR:
+    name: Cell Specific Feed Rate
+    value: 3.5671623779188438e-12
+    unit: L/cell/h
+  C_Glc_batch_trigger:
+    name: Batch-to-FedBatch Glucose Trigger
+    value: 8.460654312531018
+    unit: mmol/L
+  osm_bg_feed:
+    name: FB Feed Baseline Osmolality
+    value: 112.94923460632778
+    unit: mOsm/kg

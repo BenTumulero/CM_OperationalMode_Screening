@@ -1,0 +1,105 @@
+metadata:
+  generated: '2026-08-25 07:42:33'
+  objective_value: 3.341677820863147
+  objective_contributions:
+    STY_kg_m3_day:
+      raw_value: 0.47341901673029935
+      direction: maximize
+      score_value: 0.38124121094657615
+      weight: 1.0
+      weighted_contribution: 0.38124121094657615
+    medium_conversion_efficiency_m3_kg:
+      raw_value: 0.5450720926618454
+      direction: minimize
+      score_value: 0.9756847093004686
+      weight: 1.0
+      weighted_contribution: 0.9756847093004686
+    feed_conversion_efficiency_kg_kg:
+      raw_value: 5.470214028313902
+      direction: minimize
+      score_value: 0.9848164186291279
+      weight: 1.0
+      weighted_contribution: 0.9848164186291279
+    protein_conversion_efficiency_kg_kg:
+      raw_value: 2.504950327522295
+      direction: minimize
+      score_value: 0.9999354819869745
+      weight: 1.0
+      weighted_contribution: 0.9999354819869745
+  optimization_scoring:
+    profile: desirability
+    mode: engineering_desirability
+    objectives:
+    - STY_kg_m3_day
+    - medium_conversion_efficiency_m3_kg
+    - feed_conversion_efficiency_kg_kg
+    - protein_conversion_efficiency_kg_kg
+    objective_directions:
+      STY_kg_m3_day: maximize
+      medium_conversion_efficiency_m3_kg: minimize
+      feed_conversion_efficiency_kg_kg: minimize
+      protein_conversion_efficiency_kg_kg: minimize
+    weights:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    desirability:
+      STY_kg_m3_day:
+        minimum: 0.0
+        target: 2.0
+        safety_cap: 1.3
+      medium_conversion_efficiency_m3_kg:
+        minimum: 3.0
+        target: 0.3
+        safety_cap: 1.1
+      feed_conversion_efficiency_kg_kg:
+        minimum: 40.0
+        target: 4.0
+        safety_cap: 1.2
+      protein_conversion_efficiency_kg_kg:
+        minimum: 30.0
+        target: 2.5
+        safety_cap: 1.2
+fed_batch:
+  C_Glc_feed:
+    name: FB Feed Glucose Concentration
+    value: 11.546646056363526
+    unit: mmol/L
+  C_Gln_feed:
+    name: FB Feed Glutamine Concentration
+    value: 21.11064446407729
+    unit: mmol/L
+  C_AA_feed:
+    name: FB Feed Amino Acids Concentration
+    value: 30.794593988424733
+    unit: mmol/L
+  F_L0_specific:
+    name: FB Base Specific Feed Flow Rate
+    value: 0.06773446105238848
+    unit: L/h/L
+  osm_bg_feed:
+    name: FB Feed Baseline Osmolality
+    value: 275.4175533453909
+    unit: mOsm/kg
+chemostat:
+  D:
+    name: Dilution Rate
+    value: 0.011220729773602783
+    unit: 1/h
+  C_Glc_feed:
+    name: Chemostat Feed Glucose Concentration
+    value: 39.36515109503821
+    unit: mmol/L
+  C_Gln_feed:
+    name: Chemostat Feed Glutamine Concentration
+    value: 9.994824101089991
+    unit: mmol/L
+  C_AA_feed:
+    name: Chemostat Feed Amino Acids Concentration
+    value: 11.832050054497845
+    unit: mmol/L
+  osm_bg_feed:
+    name: Chemostat Feed Baseline Osmolality
+    value: 211.5874879051511
+    unit: mOsm/kg

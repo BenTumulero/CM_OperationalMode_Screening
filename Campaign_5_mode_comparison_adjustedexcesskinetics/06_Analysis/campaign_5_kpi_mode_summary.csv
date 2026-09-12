@@ -1,0 +1,31 @@
+campaign,mode_group,kpi,min_value,max_value,mean_value,n_runs,kpi_label
+Campaign_5,FedBatch,STY_kg_m3_day,0.3515262027773097,0.4623397148847361,0.39171692833281613,5,STY (kg/m3/day)
+Campaign_5,Batch,STY_kg_m3_day,0.6701646681006375,0.6701646681006375,0.6701646681006375,1,STY (kg/m3/day)
+Campaign_5,Chemostat,STY_kg_m3_day,1.2989147837756896,1.2989147837756896,1.2989147837756896,1,STY (kg/m3/day)
+Campaign_5,Concentrated FedBatch,STY_kg_m3_day,2.9041984534477874,3.14276722786095,2.996486663398364,5,STY (kg/m3/day)
+Campaign_5,Continuous Perfusion,STY_kg_m3_day,5.4571610439513005,6.383822131335513,5.88502090636824,5,STY (kg/m3/day)
+Campaign_5,FedBatch,feed_conversion_efficiency_kg_kg,9.975521923304143,15.163152076677939,12.069531762460315,5,Feed Conversion (kg feed/kg DCM)
+Campaign_5,Batch,feed_conversion_efficiency_kg_kg,4.914871594971405,4.914871594971405,4.914871594971405,1,Feed Conversion (kg feed/kg DCM)
+Campaign_5,Chemostat,feed_conversion_efficiency_kg_kg,4.611767518138433,4.611767518138433,4.611767518138433,1,Feed Conversion (kg feed/kg DCM)
+Campaign_5,Concentrated FedBatch,feed_conversion_efficiency_kg_kg,7.310226155905088,10.165531083469736,8.370613609201177,5,Feed Conversion (kg feed/kg DCM)
+Campaign_5,Continuous Perfusion,feed_conversion_efficiency_kg_kg,5.037589564394792,6.724622632386721,5.848626523004252,5,Feed Conversion (kg feed/kg DCM)
+Campaign_5,FedBatch,medium_conversion_efficiency_m3_kg,0.38026450532747125,0.5425271997904489,0.4520884707901141,5,Medium Conversion (m3/kg DCM)
+Campaign_5,Batch,medium_conversion_efficiency_m3_kg,0.24908039007291435,0.24908039007291435,0.24908039007291435,1,Medium Conversion (m3/kg DCM)
+Campaign_5,Chemostat,medium_conversion_efficiency_m3_kg,0.3173448375983581,0.3173448375983581,0.3173448375983581,1,Medium Conversion (m3/kg DCM)
+Campaign_5,Concentrated FedBatch,medium_conversion_efficiency_m3_kg,0.6234003573340234,0.8675748636688535,0.7183114074616178,5,Medium Conversion (m3/kg DCM)
+Campaign_5,Continuous Perfusion,medium_conversion_efficiency_m3_kg,0.4056174496642895,0.6179122268434963,0.5426088618076875,5,Medium Conversion (m3/kg DCM)
+Campaign_5,FedBatch,number_of_batches,48.0,64.0,59.2,5,Number of Batches
+Campaign_5,Batch,number_of_batches,56.0,56.0,56.0,1,Number of Batches
+Campaign_5,Chemostat,number_of_batches,8.0,8.0,8.0,1,Number of Batches
+Campaign_5,Concentrated FedBatch,number_of_batches,48.0,56.0,49.6,5,Number of Batches
+Campaign_5,Continuous Perfusion,number_of_batches,8.0,8.0,8.0,5,Number of Batches
+Campaign_5,FedBatch,protein_conversion_efficiency_kg_kg,2.084301584138329,15.653897760943048,6.795636217065004,5,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_5,Batch,protein_conversion_efficiency_kg_kg,1.6446882222291803,1.6446882222291803,1.6446882222291803,1,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_5,Chemostat,protein_conversion_efficiency_kg_kg,1.803955557112433,1.803955557112433,1.803955557112433,1,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_5,Concentrated FedBatch,protein_conversion_efficiency_kg_kg,2.8879286704040603,4.807043054607798,3.739963850415414,5,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_5,Continuous Perfusion,protein_conversion_efficiency_kg_kg,2.022492073532489,3.4783165795628634,2.75039687297596,5,Protein Conversion (kg Gln+AA/kg protein)
+Campaign_5,FedBatch,total_DCM_harvested_kg,224.97676977747824,295.8974175262311,250.69883413300232,5,Harvested Dry Cell Mass (kg)
+Campaign_5,Batch,total_DCM_harvested_kg,428.905387584408,428.905387584408,428.905387584408,1,Harvested Dry Cell Mass (kg)
+Campaign_5,Chemostat,total_DCM_harvested_kg,831.3054616164413,831.3054616164413,831.3054616164413,1,Harvested Dry Cell Mass (kg)
+Campaign_5,Concentrated FedBatch,total_DCM_harvested_kg,1858.6870102065839,2011.3710258310082,1917.751464574953,5,Harvested Dry Cell Mass (kg)
+Campaign_5,Continuous Perfusion,total_DCM_harvested_kg,3492.5830681288326,4085.646164054728,3766.413380075673,5,Harvested Dry Cell Mass (kg)
