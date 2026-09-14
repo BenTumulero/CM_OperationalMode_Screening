@@ -4,7 +4,7 @@ A systematic computational screening, optimization, and benchmarking framework f
 
 Developed at **Delft University of Technology, Bioprocess Engineering Section**.
 
-> **Important**: This workspace relies on the [`animakinetica`](https://github.com/...) simulation package. All simulation scripts and notebooks must be executed in a Python environment where `animakinetica` is installed.
+> **Important**: This workspace relies on the [`animakinetica`](https://github.com/BenTumulero/AnimaKinetica) simulation package. All simulation scripts and notebooks must be executed in a Python environment where `animakinetica` is installed.
 
 ---
 
@@ -76,16 +76,12 @@ Campaign_X_.../
 
 ## Prerequisites & Installation
 
-1. **Python Environment**: Python 3.10 or newer is recommended.
+1. **Python Environment**: Python 3.13 or newer is recommended.
 2. **Install AnimaKinetica**: Install the `animakinetica` simulation package in editable mode or from source:
    ```bash
    pip install -e /path/to/animakinetica
    ```
-3. **Dependencies**: Ensure standard scientific packages are available:
-   ```bash
-   pip install numpy scipy pandas plotly pyyaml jupyter
-   ```
-
+For further installation instructions, please see the animakinetica repository (https://github.com/BenTumulero/AnimaKinetica).
 ---
 
 ## Campaign Execution Workflow
@@ -164,6 +160,11 @@ Optimization and evaluation track summary performance metrics calculated in `Sim
 
 ---
 
-## Citation & Attribution
-* **Institution**: Delft University of Technology, Department of Biotechnology, Bioprocess Engineering Section
-* **Contact**: Ben Tumulero
+## Authors and affiliation
+
+**Ben Tumulero**  
+Delft University of Technology, Bioprocess Engineering Section
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
