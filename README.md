@@ -88,7 +88,7 @@ For further installation instructions, please see the animakinetica repository (
 
 The campaign execution lifecycle consists of the following 6 steps:
 
-<!-- ![Campaign Execution Workflow](Method%20Figures/campaign_workflow.svg) -->
+<!-- ![Campaign Execution Workflow](Method%20Figures/export/svg/campaign_workflow.svg) -->
 
 ```mermaid
 flowchart TD
