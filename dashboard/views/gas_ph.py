@@ -15,15 +15,14 @@ def render_gas(model: DashboardModel, batch_number: int) -> None:
     if not model.capabilities.has_controller_traces:
         st.info(
             "Controller traces (N, Fg, kLa, OTR/CTR) are not available. This "
-            "typically means the simulation was run in performance mode, or "
-            "the data source is an Excel export.",
+            "typically means the simulation was run in performance mode.",
             icon="ℹ️",
         )
         return
 
     data = model.simulation_data
     if data is None:
-        st.info("This sub-tab requires the pickle backend.", icon="ℹ️")
+        st.info("This sub-tab requires a simulation pickle.", icon="ℹ️")
         return
 
     render_figure(data.plot_gas_transfer(batch_number=batch_number))
@@ -36,15 +35,14 @@ def render_ph(model: DashboardModel, batch_number: int) -> None:
     if not model.capabilities.has_controller_traces:
         st.info(
             "Controller traces (base addition, C_H, C_Na) are not available. "
-            "This typically means the simulation was run in performance mode, "
-            "or the data source is an Excel export.",
+            "This typically means the simulation was run in performance mode.",
             icon="ℹ️",
         )
         return
 
     data = model.simulation_data
     if data is None:
-        st.info("This sub-tab requires the pickle backend.", icon="ℹ️")
+        st.info("This sub-tab requires a simulation pickle.", icon="ℹ️")
         return
 
     render_figure(data.plot_pH_control(batch_number=batch_number))

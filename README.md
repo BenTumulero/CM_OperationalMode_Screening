@@ -6,6 +6,9 @@ Developed at **Delft University of Technology, Bioprocess Engineering Section**.
 
 > **Important**: This workspace relies on the [`animakinetica`](https://github.com/BenTumulero/AnimaKinetica) simulation package. All simulation scripts and notebooks must be executed in a Python environment where `animakinetica` is installed.
 
+A snapshot of Animakinetica v1.1.1, used for the creation of this work, was created on the repository Zenodo.
+[![DOI](https://zenodo.org/badge/1363731709.svg)](https://doi.org/10.5281/zenodo.23339283)
+
 ---
 
 ## Table of Contents

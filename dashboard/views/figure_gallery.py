@@ -10,7 +10,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 IMAGE_EXTENSIONS = {".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"}
 HTML_EXTENSIONS = {".html"}
@@ -34,14 +33,115 @@ def discover_figures(root_dir: str, extensions: tuple[str, ...]) -> list[tuple[s
     return [(str(p.relative_to(root)), str(p)) for p in files]
 
 
+def _format_default_title(filename: str) -> str:
+    """Format a filename into a human-readable title if not explicitly mapped."""
+    stem = Path(filename).stem
+    # Replace underscores and clean up common abbreviations
+    words = stem.replace("_", " ").split()
+    return " ".join(word.capitalize() for word in words)
+
+
+def _render_categorized_grid(
+    figures: list[tuple[str, str]],
+    categories: dict[str, list[str]],
+    figure_titles: dict[str, str],
+    columns: int = 2,
+    height: int = 700,
+) -> None:
+    """Render figures grouped into category tabs, with each figure in a bordered container in an n-column grid."""
+    # Build lookup map: normalized filename/relative_path -> (rel, abs_path)
+    figure_map: dict[str, tuple[str, str]] = {}
+    for rel, abs_path in figures:
+        p = Path(rel)
+        figure_map[p.name.lower()] = (rel, abs_path)
+        figure_map[rel.lower().replace("\\", "/")] = (rel, abs_path)
+
+    matched_keys: set[str] = set()
+    category_grouped_figs: dict[str, list[tuple[str, str, str]]] = {}
+
+    for cat_name, file_patterns in categories.items():
+        cat_figs: list[tuple[str, str, str]] = []
+        for pattern in file_patterns:
+            pat_lower = pattern.lower().replace("\\", "/")
+            # 1. Exact match on filename
+            matched = False
+            for k, (rel, abs_path) in figure_map.items():
+                if k == pat_lower or Path(k).name == Path(pat_lower).name:
+                    display_title = figure_titles.get(pattern) or figure_titles.get(Path(abs_path).name) or _format_default_title(Path(abs_path).name)
+                    item = (display_title, rel, abs_path)
+                    if item not in cat_figs:
+                        cat_figs.append(item)
+                    matched_keys.add(abs_path)
+                    matched = True
+
+            # 2. Substring/prefix pattern match if not exact
+            if not matched:
+                for k, (rel, abs_path) in figure_map.items():
+                    if pat_lower in k:
+                        display_title = figure_titles.get(Path(abs_path).name) or _format_default_title(Path(abs_path).name)
+                        item = (display_title, rel, abs_path)
+                        if item not in cat_figs:
+                            cat_figs.append(item)
+                        matched_keys.add(abs_path)
+
+        if cat_figs:
+            category_grouped_figs[cat_name] = cat_figs
+
+    # Collect any unmatched figures under an "Other Figures" tab
+    unmatched: list[tuple[str, str, str]] = []
+    for rel, abs_path in figures:
+        if abs_path not in matched_keys:
+            display_title = figure_titles.get(Path(abs_path).name) or _format_default_title(Path(abs_path).name)
+            unmatched.append((display_title, rel, abs_path))
+
+    if unmatched:
+        category_grouped_figs["Other Figures"] = unmatched
+
+    if not category_grouped_figs:
+        st.info("No figures matched the specified categories.")
+        return
+
+    # Use a selectbox for category navigation instead of tabs to enable lazy loading.
+    # st.tabs renders all content upfront (including background tabs), which causes
+    # iframe-based Plotly figures to render incorrectly when loaded in the background.
+    cat_names = list(category_grouped_figs.keys())
+    selected_cat = st.selectbox(
+        "Category",
+        cat_names,
+        index=0,
+        key="gallery_category_select",
+    )
+
+    cat_figs = category_grouped_figs[selected_cat]
+    num_figs = len(cat_figs)
+    st.caption(f"{num_figs} figure(s) in {selected_cat}")
+
+    if columns <= 1:
+        # Vertical stack: one bordered container per figure
+        for display_title, rel, abs_path in cat_figs:
+            with st.container(border=True):
+                st.markdown(f"**{display_title}**")
+                _render_figure(Path(abs_path), height=height)
+    else:
+        # Multi-column grid
+        col_count = columns
+        for i in range(0, num_figs, col_count):
+            row_items = cat_figs[i : i + col_count]
+            cols = st.columns(col_count)
+            for col_idx, (display_title, rel, abs_path) in enumerate(row_items):
+                with cols[col_idx]:
+                    with st.container(border=True):
+                        st.markdown(f"**{display_title}**")
+                        _render_figure(Path(abs_path), height=height)
+
+
 def _render_figure(path: Path, height: int = 700) -> None:
     """Render a single figure file with the appropriate Streamlit element."""
     suffix = path.suffix.lower()
     if suffix in HTML_EXTENSIONS:
         # Render at natural size. CSS zoom/transform on Plotly SVG output
         # garbles axis labels and legends, so no scaling is applied.
-        html = path.read_text(encoding="utf-8")
-        components.html(html, height=height, scrolling=True)
+        st.iframe(path, height=height)
     else:
         st.image(str(path), use_container_width=True)
 
@@ -53,11 +153,15 @@ def render_gallery(
     extensions: tuple[str, ...] = (".svg", ".png", ".html"),
     layout: str = "dropdown",
     height: int = 700,
+    categories: dict[str, list[str]] | None = None,
+    figure_titles: dict[str, str] | None = None,
+    columns: int = 1,
 ) -> None:
     """Render a gallery page for figures under `root_dir`.
 
     layout="dropdown": group selectbox + figure selectbox.
-    layout="tabs": one tab per figure (no dropdowns, no "show all").
+    layout="tabs": one tab per figure (legacy single-figure tabs) or categorized tabs when `categories` is provided.
+    layout="category_grid": one tab per category; within each tab, figures are rendered in bordered containers arranged in a grid.
     """
     st.title(title)
     if description:
@@ -73,6 +177,17 @@ def render_gallery(
         return
 
     st.caption(f"{len(figures)} figure(s) found under `{root_dir}`")
+
+    # If categories are provided or layout is category_grid, organize figures by category tabs
+    if categories is not None or layout == "category_grid":
+        _render_categorized_grid(
+            figures=figures,
+            categories=categories or {},
+            figure_titles=figure_titles or {},
+            columns=columns,
+            height=height,
+        )
+        return
 
     if layout == "tabs":
         tabs = st.tabs([rel for rel, _ in figures])

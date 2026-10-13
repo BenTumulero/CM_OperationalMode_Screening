@@ -59,27 +59,3 @@ def batch_selector(model: DashboardModel, key_prefix: str = "batch") -> int:
         key=f"{key_prefix}_selector",
         format_func=lambda n: f"Batch {n}",
     )
-
-
-def render_state_trajectories(batch: Any) -> None:
-    """Render state-trajectory line plots from a batch time-series DataFrame.
-
-    Used by the Excel backend, where no live `SimulationData` object exists.
-    """
-    import plotly.express as px
-
-    if batch.time_series_df is None:
-        show_placeholder("No state trajectories available for this batch.")
-        return
-    df = batch.time_series_df
-    time_col = "Time (h)"
-    if time_col not in df.columns:
-        show_placeholder(f"Time column '{time_col}' not found in batch data.")
-        return
-    value_vars = [c for c in df.columns if c != time_col]
-    long_df = df.melt(id_vars=time_col, value_vars=value_vars,
-                      var_name="Variable", value_name="Value")
-    fig = px.line(long_df, x=time_col, y="Value", color="Variable",
-                  facet_col="Variable", facet_col_wrap=3, markers=False)
-    fig.update_layout(height=300 * ((len(value_vars) + 2) // 3), showlegend=False)
-    st.plotly_chart(fig, width='stretch')

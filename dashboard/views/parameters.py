@@ -39,8 +39,7 @@ def render(model: DashboardModel) -> None:
         st.info(
             "This result does not include simulation parameters. "
             "Parameters are available for pickle exports (both "
-            "`SimulationData` and full `CellCultureSimulation` pickles); "
-            "Excel exports do not embed the parameter set.",
+            "`SimulationData` and full `CellCultureSimulation` pickles).",
             icon="ℹ️",
         )
         return

@@ -13,22 +13,7 @@ def render(model: DashboardModel) -> None:
     data = model.simulation_data
 
     if data is None:
-        # Excel backend: show the raw closure sheet tables from the export.
-        closure_tables = model.extra.get("closure_tables") or {}
-        if not model.capabilities.has_closure_tables or not closure_tables:
-            st.info(
-                "No CHON closure sheets found in this export. Export with "
-                "include_mass_balance=True (the default).",
-                icon="ℹ️",
-            )
-            return
-        st.caption(
-            "Showing the raw closure report sections from the Excel export. "
-            "Interactive closure computation requires the pickle backend."
-        )
-        for sheet_name, df in closure_tables.items():
-            with st.expander(sheet_name, expanded=True):
-                st.dataframe(df, width='stretch')
+        st.info("CHON closure requires a simulation pickle.", icon="ℹ️")
         return
 
     if not model.capabilities.has_closure:

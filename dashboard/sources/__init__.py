@@ -8,7 +8,6 @@ from .base import (
     UnavailableCapabilityError,
 )
 from .pickle_source import PickleSource
-from .excel_source import ExcelSource
 
 __all__ = [
     "BatchView",
@@ -17,5 +16,4 @@ __all__ = [
     "DataSource",
     "UnavailableCapabilityError",
     "PickleSource",
-    "ExcelSource",
 ]

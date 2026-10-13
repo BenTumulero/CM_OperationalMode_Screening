@@ -15,15 +15,14 @@ def render(model: DashboardModel, batch_number: int) -> None:
     if not model.capabilities.has_kinetic_traces:
         st.info(
             "Kinetic traces (mu, q-rates, NF/IF factors) are not available. "
-            "This typically means the simulation was run in performance mode, "
-            "or the data source is an Excel export.",
+            "This typically means the simulation was run in performance mode.",
             icon="ℹ️",
         )
         return
 
     data = model.simulation_data
     if data is None:
-        st.info("This sub-tab requires the pickle backend.", icon="ℹ️")
+        st.info("This sub-tab requires a simulation pickle.", icon="ℹ️")
         return
 
     st.markdown("##### Comprehensive kinetics")

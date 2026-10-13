@@ -2,12 +2,10 @@
 
 This module is app-local glue code — it is deliberately NOT part of the
 `animakinetica` package. The dashboard is a pure consumer of the package's
-public API. The abstraction normalizes two backends:
+public API. The abstraction normalizes the pickle backend:
 
 - Pickle backend: `SimulationData` pickles (full fidelity, all Plotly
   figures delegated to the package's `analysis` modules).
-- Excel backend (future): exported `.xlsx` workbooks (reduced fidelity:
-  KPIs, batch summaries, and state trajectories only).
 
 Pages consume a `DashboardModel` and check `CapabilityFlags` to degrade
 gracefully when data is unavailable.
@@ -44,7 +42,6 @@ class CapabilityFlags:
     has_batch_state_trajectories: bool = False  # y_points time series
     has_summary_stats: bool = False      # KPI table / metric cards
     has_cultivation_summary: bool = False  # per-batch cultivation table
-    has_closure_tables: bool = False       # raw CHON closure sheet sections
     has_parameters: bool = False           # SimulationParameters object available
     has_optimization: bool = False         # optimization results available
 
@@ -69,9 +66,6 @@ class BatchView:
     has_controller_traces: bool = False
     has_kinetic_traces: bool = False
     has_stoich_yields: bool = False
-    # Excel backend: the per-batch time-series table (long format, one row
-    # per time point, labeled columns). Used for Plotly Express line plots.
-    time_series_df: Optional[Any] = None
 
 
 @dataclass
@@ -80,18 +74,18 @@ class DashboardModel:
 
     name: str                                   # Display name (file stem)
     source_path: Path                           # Original file location
-    source_kind: str                            # "pickle" | "excel"
+    source_kind: str                            # "pickle"
     capabilities: CapabilityFlags = field(default_factory=CapabilityFlags)
     metadata: Dict[str, Any] = field(default_factory=dict)
     summary_stats: Dict[str, Any] = field(default_factory=dict)
     batches: List[BatchView] = field(default_factory=list)
-    # Pickle backend only: the live SimulationData object, used for lazy
-    # plotting via the package's public API. Excel backend leaves this None.
+    # The live SimulationData object, used for lazy plotting via the
+    # package's public API.
     simulation_data: Optional[Any] = None
-    # Pickle backend only: the live CellCultureSimulation object when the
-    # pickle contains a full simulation (needed for optimization results).
+    # The live CellCultureSimulation object when the pickle contains a full
+    # simulation (needed for optimization results).
     simulation_object: Optional[Any] = None
-    # Backend-specific extras (e.g. Excel: cultivation/closure/totals sheets).
+    # Backend-specific extras.
     extra: Dict[str, Any] = field(default_factory=dict)
 
     @property

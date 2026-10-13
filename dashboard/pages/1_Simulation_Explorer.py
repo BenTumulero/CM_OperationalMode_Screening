@@ -1,9 +1,9 @@
 """Simulation Explorer — browse and inspect individual simulation files.
 
 This page contains the original single-file explorer: sidebar data-source
-selection (pickle/Excel backend, directory picker), file discovery, and the
-capability-gated tabs (Overview, Single Batch, Full Cultivation,
-Parameters, Optimization).
+selection (cascading cell-line → operating mode → strategy selectors over
+the repository root), file discovery, and the capability-gated tabs
+(Overview, Single Batch, Full Cultivation, Parameters, Optimization).
 """
 
 from __future__ import annotations
@@ -18,106 +18,95 @@ REPO_ROOT = DASHBOARD_DIR.parent
 if str(DASHBOARD_DIR) not in sys.path:
     sys.path.insert(0, str(DASHBOARD_DIR))
 
-from sources import DashboardModel, ExcelSource, PickleSource  # noqa: E402
+from sources import DashboardModel, PickleSource  # noqa: E402
+from sources.labels import (  # noqa: E402
+    CAMPAIGN_LABELS,
+    MODE_LABELS,
+    campaign_key,
+    mode_key,
+    run_strategy,
+)
 
-st.set_page_config(page_title="Simulation Explorer — AnimaKinetica", layout="wide")
-
-DEFAULT_SEARCH_DIR = REPO_ROOT
-
-
-def browse_directory() -> str | None:
-    """Open the OS folder-explorer dialog and return the chosen directory.
-
-    Returns None if the dialog cannot be shown (e.g. no display available
-    when running on a remote server) or the user cancels.
-    """
-    try:
-        import tkinter as tk
-        from tkinter import filedialog
-    except ImportError:
-        st.warning("Folder picker unavailable: tkinter is not installed.")
-        return None
-
-    try:
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        root.update_idletasks()
-        folder = filedialog.askdirectory(
-            initialdir=st.session_state.get("search_dir", str(DEFAULT_SEARCH_DIR)),
-            title="Select search directory",
-        )
-        root.destroy()
-        return folder or None
-    except tk.TclError as exc:
-        st.warning(f"Folder picker unavailable: {exc}")
-        return None
+SEARCH_DIR = REPO_ROOT
 
 
 @st.cache_resource(show_spinner=False)
-def load_model(source_kind: str, path_str: str) -> DashboardModel:
-    """Load a result file through the selected backend (cached per path)."""
-    source = PickleSource() if source_kind == "pickle" else ExcelSource()
-    return source.load(Path(path_str))
+def load_model(path_str: str) -> DashboardModel:
+    """Load a result file through the pickle backend (cached per path)."""
+    return PickleSource().load(Path(path_str))
 
 
-def discover_files(source_kind: str, search_dir: Path) -> list[Path]:
-    source = PickleSource() if source_kind == "pickle" else ExcelSource()
-    return source.discover(search_dir)
+def discover_files(search_dir: Path) -> list[Path]:
+    return PickleSource().discover(search_dir)
 
 
 def main() -> None:
     with st.sidebar:
         st.title("AnimaKinetica Data Dashboard")
         st.header("Data source")
-        source_kind = st.radio("Backend", ["pickle", "excel"],
-                               format_func=lambda s: {"pickle": "Pickle (full)",
-                                                      "excel": "Excel (reduced)"}[s])
-        # Directory selection: clickable "Browse…" button opens the OS
-        # folder explorer; the chosen path is stored in session state and
-        # displayed next to the button.
-        if "search_dir" not in st.session_state:
-            st.session_state.search_dir = str(DEFAULT_SEARCH_DIR)
 
-        browse_col, dir_col = st.columns([1, 2])
-        with browse_col:
-            if st.button("📁 Browse…", help="Open the folder explorer to "
-                         "choose the search directory"):
-                chosen = browse_directory()
-                if chosen:
-                    st.session_state.search_dir = chosen
-                    st.rerun()
-        with dir_col:
-            st.markdown(
-                f"<div style='padding-top: 0.4rem; "
-                "word-break: break-all; opacity: 0.8; font-size: 0.85em;'>"
-                f"📂 {st.session_state.search_dir}</div>",
-                unsafe_allow_html=True,
-            )
-
-        search_dir = Path(st.session_state.search_dir).expanduser()
-        if not search_dir.exists():
-            st.warning(f"Directory not found: {search_dir}")
-            files: list[Path] = []
-        else:
-            files = discover_files(source_kind, search_dir)
-
+        files = discover_files(SEARCH_DIR)
         if not files:
             st.warning(
-                f"No .{'pkl' if source_kind == 'pickle' else 'xlsx'} files found "
-                f"under {search_dir}. Run a simulation and export with "
-                "`sim.data.save(...)` first."
+                f"No .pkl files found under {SEARCH_DIR}. Run a simulation "
+                "and export with `sim.data.save(...)` first."
             )
             st.stop()
 
-        selected_file = st.selectbox(
-            "Result file",
-            files,
-            format_func=lambda p: f"{p.relative_to(search_dir)}",
+        # --- 1. Cell line (campaign) selector ---
+        campaign_keys = sorted(
+            {key for f in files if (key := campaign_key(f))},
+            key=lambda k: CAMPAIGN_LABELS.get(k, k),
+        )
+        if not campaign_keys:
+            st.warning("No campaign-organized .pkl files found.")
+            st.stop()
+
+        selected_campaign = st.selectbox(
+            "Cell line",
+            campaign_keys,
+            format_func=lambda k: CAMPAIGN_LABELS.get(k, k),
         )
 
+        # --- 2. Operating mode selector (filtered by cell line) ---
+        campaign_files = [f for f in files if campaign_key(f) == selected_campaign]
+        mode_keys = sorted(
+            {key for f in campaign_files if (key := mode_key(f))},
+            key=lambda k: MODE_LABELS.get(k, k),
+        )
+        if not mode_keys:
+            st.warning("No operating modes found for this cell line.")
+            st.stop()
+
+        selected_mode = st.selectbox(
+            "Operating mode",
+            mode_keys,
+            format_func=lambda k: MODE_LABELS.get(k, k),
+        )
+
+        # --- 3. Feed/perfusion strategy selector (when available) ---
+        mode_files = [f for f in campaign_files if mode_key(f) == selected_mode]
+        strategies = sorted({s for f in mode_files if (s := run_strategy(f))})
+        if strategies:
+            selected_strategy = st.selectbox("Feed/perfusion strategy", strategies)
+            strategy_files = [
+                f for f in mode_files if run_strategy(f) == selected_strategy
+            ]
+        else:
+            strategy_files = mode_files
+
+        # --- 4. Run selector (only when multiple runs remain) ---
+        if len(strategy_files) > 1:
+            selected_file = st.selectbox(
+                "Run",
+                strategy_files,
+                format_func=lambda p: p.parent.name,
+            )
+        else:
+            selected_file = strategy_files[0]
+
     try:
-        model = load_model(source_kind, str(selected_file))
+        model = load_model(str(selected_file))
     except Exception as exc:  # noqa: BLE001 - surface load errors clearly
         st.error(f"Failed to load result file: {exc}")
         st.stop()

@@ -47,10 +47,7 @@ def _unavailable_message(model: DashboardModel) -> str:
             "carries no results (e.g. the pickle predates optimization or "
             "the manager was not serialized)."
         )
-    return (
-        "Optimization data is not available for this result type "
-        "(Excel exports contain no optimization information)."
-    )
+    return "Optimization data is not available for this result type."
 
 
 def _fmt(value, fmt: str = "{:.4g}") -> str:

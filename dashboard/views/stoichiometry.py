@@ -15,15 +15,14 @@ def render(model: DashboardModel, batch_number: int) -> None:
     if not model.capabilities.has_stoich_yields:
         st.info(
             "Stoichiometric yield trajectories (Y_*) are not available. This "
-            "typically means the simulation was run in performance mode, or "
-            "the data source is an Excel export.",
+            "typically means the simulation was run in performance mode.",
             icon="ℹ️",
         )
         return
 
     data = model.simulation_data
     if data is None:
-        st.info("This sub-tab requires the pickle backend.", icon="ℹ️")
+        st.info("This sub-tab requires a simulation pickle.", icon="ℹ️")
         return
 
     st.markdown("##### Stoichiometric yields")

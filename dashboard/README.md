@@ -11,36 +11,30 @@ code. Pages live in `dashboard/views/` (rendered as in-app tabs by `app.py`).
   `sim.data.save(...)` / `sim.data.save_pickle(...)` (also accepts full
   `CellCultureSimulation` pickles) and delegates all plotting to the
   package's Plotly visualizations.
-- **Excel backend**: loads `.xlsx` workbooks produced by
-  `sim.data.save(file_format="excel")`. Provides KPI cards (metric labels
-  are mapped back to canonical summary-stat keys), cultivation summary,
-  per-batch state trajectories (Plotly Express), and the raw CHON closure
-  report sheets. Controller/kinetic panels degrade gracefully with
-  informative placeholders.
 - **Graceful degradation**: pages check capability flags, so
-  performance-mode pickles (no detailed traces) and Excel exports render
-  placeholders instead of crashing.
+  performance-mode pickles (no detailed traces) render placeholders
+  instead of crashing.
 
 ### Pages
 
 The app is organized into three top-level tabs that separate single-batch
 (intra-batch) views from cumulative, process-level (multi-batch) views.
 
-| Tab | Sub-tab | Pickle backend | Excel backend |
-|---|---|---|---|
-| Overview | — | KPI cards, summary statistics table | KPI cards (label→key mapped), summary table |
-| Single Batch | Biomass & Metabolites | Biomass/metabolites figure | State-trajectory facets (Plotly Express) |
-| | Volume and Feed | Volume/feed figure | Placeholder (traces not in export) |
-| | Gas | Gas transfer figure | Placeholder (traces not in export) |
-| | pH | pH control figure | Placeholder (traces not in export) |
-| | Kinetics | Rates, NF/IF factors | Placeholder (traces not in export) |
-| | Stoichiometry | Stoichiometric yields figure | Placeholder (traces not in export) |
-| Full Cultivation | Cultivation Summary | Cultivation summary table | Cultivation summary table |
-| | Harvest | Cumulative harvest figure | Placeholder (figure needs pickle) |
-| | Medium use | Cumulative medium-use figure | Placeholder (figure needs pickle) |
-| | Base use | Cumulative base-use figure | Placeholder (figure needs pickle) |
-| | Gas use | Cumulative gas-use figure | Placeholder (figure needs pickle) |
-| | CHON Closure | Interactive CHON closure computation | Raw closure report sheets |
+| Tab | Sub-tab | Pickle backend |
+|---|---|---|
+| Overview | — | KPI cards, summary statistics table |
+| Single Batch | Biomass & Metabolites | Biomass/metabolites figure |
+| | Volume and Feed | Volume/feed figure |
+| | Gas | Gas transfer figure |
+| | pH | pH control figure |
+| | Kinetics | Rates, NF/IF factors |
+| | Stoichiometry | Stoichiometric yields figure |
+| Full Cultivation | Cultivation Summary | Cultivation summary table |
+| | Harvest | Cumulative harvest figure |
+| | Medium use | Cumulative medium-use figure |
+| | Base use | Cumulative base-use figure |
+| | Gas use | Cumulative gas-use figure |
+| | CHON Closure | Interactive CHON closure computation |
 
 ## Setup
 
