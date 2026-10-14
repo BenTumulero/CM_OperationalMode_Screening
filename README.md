@@ -1,6 +1,6 @@
 # Bioprocess Operational Mode Screening
 
-A systematic computational screening, optimization, and benchmarking framework for animal cell culture bioprocesses, conducted specifically for the purpose of cultivated meat process design. This repository investigates bioreactor operational modes, feeding strategies, perfusion strategies, and metabolic kinetics to evaluate process performance metrics such as Space-Time Yield ($STY$), Medium Efficiency, and Nutrient Use Efficiency.
+A systematic computational screening, optimization, and benchmark for animal cell culture proliferation, conducted specifically for the purpose of cultivated meat process design. This repository investigates bioreactor operational modes, feeding strategies, perfusion strategies, and metabolic kinetics to evaluate process performance metrics such as Space-Time Yield (STY), Medium Efficiency, and Nutrient Use Efficiency.
 
 Developed at **Delft University of Technology, Bioprocess Engineering Section**.
 
