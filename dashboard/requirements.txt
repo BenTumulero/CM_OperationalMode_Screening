@@ -1,1 +1,2 @@
 streamlit>=1.30
+animakinetica @ git+https://github.com/BenTumulero/AnimaKinetica.git@v1.1.1
